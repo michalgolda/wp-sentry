@@ -155,16 +155,19 @@ final class WP_Sentry_Js_Tracker {
 				'wp-sentry-polyfill',
 				'https://polyfill.io/v3/polyfill.min.js?features=Promise%2CObject.assign%2CNumber.isNaN%2CArray.prototype.includes%2CString.prototype.startsWith',
 				[],
-				WP_Sentry_Version::SDK_VERSION
+				WP_Sentry_Version::SDK_VERSION,
+				[
+					"strategy" => "defer"
+				]
 			);
 
 			wp_enqueue_script(
 				'wp-sentry-browser',
 				$traces_sample_rate > 0
-					? plugin_dir_url( WP_SENTRY_PLUGIN_FILE ) . 'public/wp-sentry-browser-tracing.es5.min.js'
-					: plugin_dir_url( WP_SENTRY_PLUGIN_FILE ) . 'public/wp-sentry-browser.es5.min.js',
-				[ 'wp-sentry-polyfill' ],
-				WP_Sentry_Version::SDK_VERSION
+				WP_Sentry_Version::SDK_VERSION,
+				[
+					"strategy" => "defer"
+				]
 			);
 		} else {
 			$replays_session_sample_rate = defined( 'WP_SENTRY_BROWSER_REPLAYS_SESSION_SAMPLE_RATE' )
@@ -190,7 +193,10 @@ final class WP_Sentry_Js_Tracker {
 				'wp-sentry-browser',
 				plugin_dir_url( WP_SENTRY_PLUGIN_FILE ) . "public/wp-sentry-{$featuresString}.min.js",
 				[],
-				WP_Sentry_Version::SDK_VERSION
+				WP_Sentry_Version::SDK_VERSION,
+				[
+					"strategy" => "defer"
+				]
 			);
 		}
 
